@@ -10,6 +10,7 @@ require('dotenv').config({path: 'variables.env'});
 const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 
 
@@ -46,7 +47,7 @@ app.use(session({
   key: process.env.KEY,
   resave: false,
   saveUninitialized: false,
-  store 
+  store: new MongoStore({ mongooseConnection: mongoose.connection }) 
 }))
 
 app.use('/',route());
