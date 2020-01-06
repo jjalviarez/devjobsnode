@@ -8,7 +8,12 @@
 
 
 exports.mostrarTrabajos = (req,res) => {
-        res.send("activo con  controler");
+        res.render("home", {
+            nombrePagina: 'devJobs',
+            tagline: 'encuenta y Publica trabajos',
+            barra: true,
+            boton: true
+        });
 };
 
 
