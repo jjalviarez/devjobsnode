@@ -52,29 +52,25 @@ module.exports = {
     */
     //Como se implemento en el curso
     tipoContrato: (seleccionada, opciones) => {
-    	
-    	//console.log("value='" + seleccionada + "'");
 		return opciones.fn(this).replace(new RegExp("value='" + seleccionada + "'"),'$& selected');
-		
-		/*
-		console.log(opciones.fn(this));
-		return opciones.fn(this).replace(
-            new RegExp(` value="${seleccionada}"`), '$& selected="selected"'
-        )
+    },
+    //alertas de flash()
+    mostrarAlertas : (mensajes = {}, alertas) => {
+    	/*
+    	                    each categoria in Object.keys(locals.mensajes)
+                        each error in mensajes[categoria]
+                            .alerta(class= categoria)
+                                p= error
         */
+        let html= '';
+        Object.keys(mensajes).forEach(categoria =>{
+        	mensajes[categoria].forEach(texto => {
+        		html+= '<div class="alerta ' + categoria + '">' + texto + '</div>' ;
+        	});
+        });
+  
+		return alertas.fn().html = html;
     }
-    
 };
 
 
-/*
-
-
-                <option value='' disabled selected>-- Selecciona --</option>
-                <option value='Freelance'>Freelance</option>
-                <option value='Tiempo Completo'>Tiempo Completo</option>
-                <option value='Medio Teimpo'>Medio Teimpo</option>
-                <option value='Por Proyecto'>Por Proyecto</option>
-                
-                
-*/

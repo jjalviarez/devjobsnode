@@ -1,0 +1,33 @@
+<main class="contenedor">
+    <form class="default-form"  method='POST'>
+        {{#if mensajes}}
+            <div class="campo">
+                {{#mostrarAlertas mensajes}}
+                {{/mostrarAlertas}}    
+            </div>
+        {{/if}}
+        <div class="campo">
+            <label>Nombre</label>
+            <input type='text' name='nombre' placeholder='Ej: Juan Perez' value={{nombre}}>
+        </div>
+        <div class="campo">
+            <label>Email</label>
+            <input type='email' name='email' placeholder='Ej: correo@correo.com' value={{email}}>
+        </div>
+        <div class="campo">
+            <label>Password</label>
+            <input type='password' name='password' placeholder='Contraseña' value={{password}}>
+        </div>
+        <div class="campo">
+            <label>Confirmar Password</label>
+            <input type='password' name='confirmar' placeholder='Confirma Contraseña' value={{confirmar}}>
+        </div>
+        
+        <div class="campo acciones">
+            <a href='/iniciar-sesion' >Iniciar Sesion</a>
+        </div>
+        <div class="campo">
+               <input type= 'submit' value ='Crear Ceunta' class= 'btn btn-azul'> </input>
+        </div>
+    </form> 
+</main>
