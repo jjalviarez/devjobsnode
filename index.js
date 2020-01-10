@@ -9,19 +9,20 @@ const route = require('./routes');
 require('dotenv').config({path: 'variables.env'});
 const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-
-
-
-
 
 //crear un app en express
 const app = express();
 
-
+//Se habilita el bodyParser para los req de datos
+app.use(bodyParser.urlencoded({extended: false }));
+app.use(bodyParser.json());
 
 //Carpeta de archivos estaticos
+// static files
+//app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
 //agregra la caprteta de las vistas 
 app.set('views',path.join(__dirname, './views'));
@@ -31,7 +32,8 @@ app.set('views',path.join(__dirname, './views'));
 
 app.engine('handlebars',
     exphbs({
-      defaultLayout: 'layout'
+      defaultLayout: 'layout',
+      helpers: require('./helpers/handlebars')
     })
 );
 

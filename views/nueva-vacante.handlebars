@@ -1,0 +1,55 @@
+<main class="contenedor">
+    <form class="default-form"  method='POST'>
+        <h3>Informacion General</h3>
+        <div class="campo">
+            <label>Titulo</label>
+            <input type='text' name='titulo' placeholder='Ej: React Developer' value={{vacante.titulo}}>
+        </div>
+        <div class="campo">
+            <label>Empresa</label>
+            <input type='text' name='empresa' placeholder='Empresa que contrata' value={{vacante.empresa}}>
+        </div>
+        <div class="campo">
+            <label>Ubicacion</label>
+            <input type='text' name='ubicacion' placeholder='Ej: Panama' value={{vacante.ubicacion}}>
+        </div>
+        <div class="campo">
+            <label>Salario (USD)</label>
+            <input type='text' name='salario' placeholder='Salario' value={{vacante.salario}}>
+        </div>
+        <div class="campo">
+            <label>Contrato</label>
+            <select name='contrato'>
+                {{#tipoContrato vacante.contrato}}
+                    <option value='' disabled selected>-- Selecciona --</option>
+                    <option value='Freelance'>Freelance</option>
+                    <option value='Tiempo Completo'>Tiempo Completo</option>
+                    <option value='Medio Teimpo'>Medio Teimpo</option>
+                    <option value='Por Proyecto'>Por Proyecto</option>
+                {{/tipoContrato}}
+            </select>
+        </div>
+        <h3>Descripcion del Puesto</h3>
+        <div class="cambpo descripcion">
+            <label>Descripcion</label>
+            <input type='hidden' name='descripcion' id='x' value='{{{vacante.descripcion}}}' >
+            <trix-editor input='x'></trix-editor>
+        </div>
+        <h3>Conocimientos</h3>
+        <ul class="lista-conocimientos">
+            {{#seleccionarSkills vacante.skills}}
+            {{/seleccionarSkills}}
+        </ul>
+        <div class="campo centrar-horizontal">
+            <input type='hidden' name='skills' id='skills'>
+            {{#if vacante}}
+                <input type= 'submit' value ='Actualizar' class= 'btn btn-azul'> </input>
+            {{else}}
+                <input type= 'submit' value ='Publicar' class= 'btn btn-azul'> </input>
+            {{/if}}
+            
+            
+        </div>
+    </form> 
+</main>
+

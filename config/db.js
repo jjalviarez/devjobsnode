@@ -5,5 +5,5 @@ mongoose.connect(process.env.BD_URL, {useNewUrlParser: true,  useUnifiedTopology
 mongoose.connection.on('error', (error) =>{
     console.log(error);
 });
-//importar los mdoelso 
+//importar los modelos 
 require("../models/Vacantes");

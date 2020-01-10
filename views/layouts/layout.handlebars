@@ -9,7 +9,8 @@
   <title>{{nombrePagina}}</title>
 
   
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="/css/trix.css">
+  <link rel="stylesheet" href="/css/app.css">
 </head>
 
 <body>
@@ -19,13 +20,13 @@
             <a href="/">devJobs</a>
         </h1>
         {{#if barra}}
-        <div class="buscador">
-            <form action='#'>
-                <input type='text' class='buscar'>
-                <input type='submit' value='Buscar'>
-                
-            </form>
-        </div>
+            <div class="buscador">
+                <form action='#'>
+                    <input type='text' class='buscar'>
+                    <input type='submit' value='Buscar'>
+                    
+                </form>
+            </div>
         {{/if}}
     </div>
     
@@ -42,6 +43,8 @@
     <div class="contenido-principal contenedor">
         {{{body}}}
     </div>
+    <script src='/js/trix.js'></script>
+    <script src='/dist/bundle.js'></script>
 </body>
 
 </html>

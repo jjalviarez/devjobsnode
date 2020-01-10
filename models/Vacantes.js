@@ -37,16 +37,17 @@ const vacanteSchema = new mongoose.Schema({
         lowercase:true
     },
     skills: [String],
-    candidatos: {
+    candidatos: [{
         nombre:String,
         email:String,
         cv: String
-    }
+    }]
 });
 
 vacanteSchema.pre('save',function (next) {
     const url= slug(this.titulo)
     this.url = url + '-' + shortid.generate();
+    this.skills = JSON.parse(this.skills );
     next();
 })
 

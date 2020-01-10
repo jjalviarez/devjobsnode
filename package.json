@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./index.js",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "watch": "webpack --w --mode development",
+    "des": "concurrently \"npm run watch \" \"npm run dev \"  "
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   },
   "homepage": "https://github.com/jjalviarez/devjobsnode#readme",
   "dependencies": {
+    "concurrently": "^5.0.2",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
@@ -30,6 +33,11 @@
     "slug": "^2.1.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "nodemon": "^2.0.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
