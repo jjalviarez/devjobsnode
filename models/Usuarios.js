@@ -11,7 +11,7 @@ const usuariosSchema = new mongoose.Schema({
     },
     nombre: {
         type: String,
-        required: 'Nombre es obligatorio'
+        required: true
     },
     password: {
         type: String,
@@ -24,22 +24,15 @@ const usuariosSchema = new mongoose.Schema({
 });
 
 usuariosSchema.pre('save',function (next) {
-    
     if(!this.isModified('password')) return next();
     this.password = bcrypt.hashSync(this.password, 10);
     next();
+});
+
+usuariosSchema.post('save',function (error, doc, next) {
+    (error.name == 'MongoError' && error.code == 11000) ? next('Esta Correo ya esta registrado') : next(error);
     
-    /*
-    // si el password ya esta hasheado
-    if(!this.isModified('password')) {
-        return next(); // deten la ejecución
-    }
-    // si no esta hasheado
-    const hash = bcrypt.hashSync(this.password, 12);
-    this.password = hash;
-    next();
-    */
-})
+});
 
 module.exports = mongoose.model('Usuario', usuariosSchema );
 

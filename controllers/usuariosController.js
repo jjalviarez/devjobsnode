@@ -9,7 +9,7 @@ const { body, sanitizeBody, validationResult, check } = require('express-validat
 exports.formCrearCuenta = (req,res) => {
     res.render('crearCuenta', {
         nombrePagina: 'Crear Cuenta',
-        tagline: 'Publica ahora'
+        tagline: 'Publica ahora',
     });
 };
 
@@ -39,17 +39,16 @@ exports.crearCuenta = async (req,res,next) => {
         //req.flash('correcto', 'Se envio un mensaje a tu correo Para Activar Tu cuenta');
         res.redirect('/iniciar-sesion');
     } catch (error) {
-        //req.flash('error', error.errors.map(error => error.message))
+        req.flash('error', error);
         res.render('crearCuenta', {
-            //mensajes: req.flash(),
-            nombrePagina: 'Crear Cuenta',
-            email, 
-            password,
-            nombre,
-            confirmar
+                mensajes: req.flash(),
+                nombrePagina: 'Crear Cuenta',
+                tagline: 'Publica ahora',
+                email, 
+                password,
+                nombre,
+                confirmar
         });
-        
-        
     }
 };
 
@@ -78,6 +77,7 @@ exports.validarregistro = async  (req,res,next) => {
     res.render('crearCuenta', {
             mensajes: req.flash(),
             nombrePagina: 'Crear Cuenta',
+            tagline: 'Publica ahora',
             email, 
             password,
             nombre,
@@ -87,35 +87,6 @@ exports.validarregistro = async  (req,res,next) => {
 };
 
 
-//body('nombre').not().isEmpty().trim().escape()
-/*
-exports.validarRegistro = async (req, res, next) => {
-    const rules = [
-        sanitizeBody('nombre').escape(),
-        sanitizeBody('email').escape(),
-        sanitizeBody('password').escape(),
-        sanitizeBody('confirmar').escape(),
-        body('nombre').not().isEmpty().withMessage('El nombre es Obligatorio'),
-        body('email').isEmail().withMessage('El email debe ser valido'),
-        body('password').not().isEmpty().withMessage('El password no puede ir vacío'),
-        body('confirmar').not().isEmpty().withMessage('Confirmar password no puede ir vacío'),
-        body('confirmar').equals(req.body.password).withMessage('El password es diferente')
-    ];
-    await Promise.all(rules.map( validation => validation.run(req)));
-    const errores = validationResult(req);
- 
-    if(errores.isEmpty()){
-        return next();
-    }
-    req.flash('error', errores.array().map(error => error.msg));
-    res.render('crear-cuenta', {
-        nombrePagina: 'Crea tu cuenta en devJobs',
-        tagline: 'Comienza a publicar tus vacantes gratis, solo debes crear una cuenta',
-        mensajes: req.flash()
-    });
-    return;
-};
-*/
 
 exports.forminiciarSesion = (req,res) => {
     

@@ -515,3 +515,10 @@ p.candidatos {
     color: white;
     font-size: 1.8rem;
 }
+
+.fade{
+    opacity: 0;
+
+    -webkit-transition: opacity 2s;
+   transition: opacity 2s;
+}
