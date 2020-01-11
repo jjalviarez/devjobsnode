@@ -1,12 +1,12 @@
-/*
+//Referencia al modelo donde vamos a autenticar
+const mongoose = require('mongoose');
+const Usuarios = mongoose.model('Usuario');
 
-const Sequelize = require("sequelize");
+
 const passport = require('passport');
-const bcrypt = require('bcrypt-nodejs');
-const Usuarios = require("../models/Usuarios");
-const enviarEmail = require("../handlers/email");
-const crypto = require('crypto');
-const Op = Sequelize.Op;
+//const bcrypt = require('bcrypt-nodejs');
+//const enviarEmail = require("../handlers/email");
+//const crypto = require('crypto');
 
 
 //loguear usuario
@@ -16,7 +16,7 @@ exports.autenticarUsuario = passport.authenticate('local', { successRedirect: '/
                                     badRequestMessage: 'usuario y pass en clanco'
                                 });
                                 
-                                
+ /*                       
 //Desloguear usuario
 exports.cerrarSesion = (req,res) =>{
     req.logout();
@@ -138,9 +138,9 @@ exports.actualizarPassword = async (req,res) =>{
 
 
 
+
+
 */
-
-
 
 
 

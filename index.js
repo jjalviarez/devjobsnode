@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const passport = require('./config/passport');
 const MongoStore = require('connect-mongo')(session);
 
 //crear un app en express
@@ -57,6 +58,9 @@ app.use(session({
   saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection }) 
 }))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //declaraciones de los middleware
 app.use((req, res, next) => {

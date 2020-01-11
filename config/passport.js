@@ -2,7 +2,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 //Referencia al modelo donde vamos a autenticar
-const Usuarios = require("../models/Usuarios");
+const mongoose = require('mongoose');
+const Usuarios = mongoose.model('Usuario');
 
 // local strategy - login con credenciales de ususqrio y pass locales
 
@@ -14,18 +15,19 @@ passport.use(new LocalStrategy(
     async (email, password, done) => {
         try {
             //console.log(email);
-            const usuario = await Usuarios.findOne({where: {email}});
+            const usuario = await Usuarios.findOne({email});
             //el ususario existe  pero el pass es incorrecto
             if(!usuario.verificarPassword(password)){
                 return done(null, false, { message: 'Incorrect password.' });
             }
+            /*
             if(!usuario.activo) {
                 return done(null, false, { message: 'Ceunta no esta activa confirma tu email.' });
             }
-            
+            */
             return done(null, usuario);
         } catch(error) {
-            //Ucuario no existe
+            //Usuario no existe
             
             return done(null, false, { message: 'Incorrect username.' });
         }

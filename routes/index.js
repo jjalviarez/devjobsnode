@@ -1,14 +1,13 @@
 const express = require('express');
 const route = express.Router();
 
-//importar express-validator
-const { body, sanitizeBody, validationResult, check } = require('express-validator');
 
 
 //Importar el controladores
 const homeController = require("../controllers/homeController");
 const vacantesController = require("../controllers/vacantesController");
 const usuariosController = require("../controllers/usuariosController");
+const authController = require("../controllers/authController");
 
 
 
@@ -42,7 +41,7 @@ module.exports = () => {
     
     //Iniciar Sesion
     route.get('/iniciar-sesion',usuariosController.forminiciarSesion);
-    //route.post('/iniciar-sesion',authController.autenticarUsuario);
+    route.post('/iniciar-sesion',authController.autenticarUsuario);
     //route.get('/iniciar-sesion/:token',usuariosController.activarCuenta);
     
   //Creat Token para cambio de  Contraseña 
