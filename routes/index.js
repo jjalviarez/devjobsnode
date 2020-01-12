@@ -48,6 +48,10 @@ module.exports = () => {
     //route.get('/restablecer', usuariosController.formRestablecerPassword);
     //route.post('/restablecer', authController.enviarToken); 
     
+    
+    route.get('/administracion',authController.mostrarPanel);
+    
+    
     return route;
 
 };
