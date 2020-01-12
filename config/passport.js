@@ -34,12 +34,11 @@ passport.use(new LocalStrategy(
     }
 ));
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
+passport.serializeUser((user, done) => done (null, user._id));
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
+passport.deserializeUser(async (id, done) => {
+ const usuario = await Usuarios.findById(id).exec();;
+ return  done(null, usuario);
 });
 
 module.exports = passport;

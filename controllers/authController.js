@@ -10,7 +10,7 @@ const passport = require('passport');
 
 
 //loguear usuario
-exports.autenticarUsuario = passport.authenticate('local', { successRedirect: '/',
+exports.autenticarUsuario = passport.authenticate('local', { successRedirect: '/administracion',
                                     failureRedirect: '/iniciar-sesion',
                                     failureFlash: true,
                                     badRequestMessage: 'usuario y pass en clanco'

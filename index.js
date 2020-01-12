@@ -59,6 +59,7 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection }) 
 }))
 
+//Inicializar passport
 app.use(passport.initialize());
 app.use(passport.session());
 
