@@ -3,26 +3,25 @@
     <div class="botones separador">
         <a href='/editar-perfil' class='btn btn-azul'>Edita Tu Perfil</a>
         <a href='/vacantes/nueva' class='btn btn-verde'>Nueva Vacante</a>    
+        <a href='/logout' class='btn btn-rojo'>Cerrar Sesion</a>    
     </div>
     
     <h2>Lista Vacantes</h2>
     {{#if vacantes}}
         {{#each vacantes}}
-            <div class="vacante">
+            <div class="vacante panel-administracion">
                 <div class="caja">
                     <h3>{{this.empresa}}</h3>
                     <p class='puesto'>{{this.titulo}}</p>
                 </div>
-                <div class="caja">
-                    <p class='etiqueta'>Ubicacion</p>
-                    <p class='nombre'>{{this.ubicacion}}</p>
-                </div>
-                <div class="caja">
-                    <p class='etiqueta'>Contrato</p>
-                    <p class='nombre contrato'>{{this.contrato}}</p>
+                <div class="caja centrar-vertical">
+                    <a href='/candidatos/{{this._id}}' class="btn btn-amarillo">Cadidatos</a>
                 </div>
                 <div class="caja centrar-vertical">
-                    <a href='/vacante/{{this.url}}' class="btn btn-verde">Mas info</a>
+                    <a href="/vacante/editar/{{this.url}}" class="btn btn-azul">Editar</a>
+                </div>
+                <div class="caja centrar-vertical">
+                    <a href='#' data-eliminar='{{this._id}}' class="btn btn-rojo">Eliminar</a>
                 </div>
             </div>
         {{/each}}

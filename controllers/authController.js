@@ -1,7 +1,7 @@
 //Referencia al modelo donde vamos a autenticar
 const mongoose = require('mongoose');
 const Usuarios = mongoose.model('Usuario');
-
+const Vacante = mongoose.model('Vacante');
 
 const passport = require('passport');
 //const bcrypt = require('bcrypt-nodejs');
@@ -16,7 +16,7 @@ exports.autenticarUsuario = passport.authenticate('local', { successRedirect: '/
                                     badRequestMessage: 'usuario y pass en clanco'
                                 });
                                 
- /*                       
+                        
 //Desloguear usuario
 exports.cerrarSesion = (req,res) =>{
     req.logout();
@@ -32,7 +32,7 @@ exports.usuarioAutenticado = (req,res,next) =>{
         return res.redirect("/iniciar-sesion");
     }
 }
-
+/*
 //Enviar Token usuario
 exports.enviarToken = async (req,res) =>{
     const {email} = req.body;
@@ -145,11 +145,12 @@ exports.actualizarPassword = async (req,res) =>{
 
 
 exports.mostrarPanel = async (req,res) =>{
-    
+    const vacantes = await Vacante.find( {autor: req.user._id} );
     
     res.render("administracion", {
         nombrePagina: 'Panel de administracion',
-        tagline: 'Crea y administra tus vacantes'
+        tagline: 'Crea y administra tus vacantes',
+        vacantes
     });
 
 };

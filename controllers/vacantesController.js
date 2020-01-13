@@ -23,8 +23,7 @@ exports.formularioNuevaVacante = (req,res) => {
 
 
 exports.agregarVacantes = async (req,res) => {
-        const vacante = await Vacante.create(req.body);
-        //console.log(vacante);
+        const vacante = await Vacante.create({...req.body, autor: req.user._id});
         res.redirect("/vacante/" + vacante.url);
 };
 

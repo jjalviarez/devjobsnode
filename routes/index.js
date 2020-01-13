@@ -24,14 +24,14 @@ module.exports = () => {
 
     
     //crear bacantes 
-    route.get('/vacantes/nueva', vacantesController.formularioNuevaVacante );
-    route.post('/vacantes/nueva', vacantesController.agregarVacantes );
+    route.get('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.formularioNuevaVacante );
+    route.post('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.agregarVacantes );
     
     //Vacante por URL
     route.get('/vacante/:url', vacantesController.vacantePorUrl );
     //editar
-    route.get('/vacante/editar/:url', vacantesController.editarVacante );
-    route.post('/vacante/editar/:url', vacantesController.actualizarVacante );
+    route.get('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.editarVacante );
+    route.post('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.actualizarVacante );
     
     //crear Cuenta
     //Crear Nueva Cuenta
@@ -48,8 +48,10 @@ module.exports = () => {
     //route.get('/restablecer', usuariosController.formRestablecerPassword);
     //route.post('/restablecer', authController.enviarToken); 
     
+     //Cerrar sesion
+    route.get('/logout', authController.usuarioAutenticado, authController.cerrarSesion);
     
-    route.get('/administracion',authController.mostrarPanel);
+    route.get('/administracion',authController.usuarioAutenticado,authController.mostrarPanel);
     
     
     return route;
