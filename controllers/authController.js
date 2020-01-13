@@ -144,5 +144,12 @@ exports.actualizarPassword = async (req,res) =>{
 
 
 
+exports.mostrarPanel = async (req,res) =>{
+    
+    
+    res.render("administracion", {
+        nombrePagina: 'Panel de administracion',
+        tagline: 'Crea y administra tus vacantes'
+    });
 
-
+};
