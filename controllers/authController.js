@@ -148,8 +148,8 @@ exports.mostrarPanel = async (req,res) =>{
     
     
     res.render("administracion", {
-        nombrePagina: 'devJobs',
-        tagline: 'encuenta y Publica trabajos'
+        nombrePagina: 'Panel de administracion',
+        tagline: 'Crea y administra tus vacantes'
     });
 
 };
