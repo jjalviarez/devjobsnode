@@ -51,7 +51,12 @@ module.exports = () => {
      //Cerrar sesion
     route.get('/logout', authController.usuarioAutenticado, authController.cerrarSesion);
     
+    //sitio de administracion
     route.get('/administracion',authController.usuarioAutenticado,authController.mostrarPanel);
+    //editar Perfil
+    route.get('/editar-perfil',authController.usuarioAutenticado,usuariosController.formEditarPerfil);
+    route.post('/editar-perfil',authController.usuarioAutenticado,usuariosController.actualizarPerfil);
+    
     
     
     return route;

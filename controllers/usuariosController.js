@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
 const { body, sanitizeBody, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
 
 
 
@@ -135,3 +136,42 @@ exports.activarCuenta = async (req,res) =>{
 
 */
 
+
+
+
+exports.formEditarPerfil = (req,res,next) => {
+    res.render("editar-perfil", {
+        nombrePagina: req.user.nombre,
+        tagline: 'Ecitar Usuario',
+        usuario: req.user
+    });
+};
+
+exports.actualizarPerfil = async (req,res,next) => {
+    const {email, password, nombre, confirmar, passwordOld} = req.body;
+    const PerfilActualizado= {email,nombre};
+    if (password) {
+        if(bcrypt.compareSync(passwordOld, req.user.password) && (password === confirmar))
+            PerfilActualizado.password = password;
+        else {
+            req.flash('error', 'Password invalido');
+            res.render('editar-perfil', {
+                    mensajes: req.flash(),
+                    nombrePagina: req.user.nombre,
+                    tagline: 'Ecitar Usuario',
+                    usuario: req.body
+            });
+            return;
+        }
+    }
+    const _id = req.user._id;
+    await Usuario.findByIdAndUpdate(
+        _id,
+        PerfilActualizado,
+        {
+            runValidators: true
+        
+        });
+    res.redirect("/administracion");
+    
+};

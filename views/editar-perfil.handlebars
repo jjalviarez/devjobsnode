@@ -1,0 +1,27 @@
+<main class="contenedor">
+    <form class="default-form"  method='POST'>
+        <div class="campo">
+            <label>Nombre</label>
+            <input type='text' name='nombre' placeholder='Ej: Juan Perez' value={{usuario.nombre}}>
+        </div>
+        <div class="campo">
+            <label>Email</label>
+            <input type='email' name='email' placeholder='Ej: correo@correo.com' value={{usuario.email}}>
+        </div>
+        <div class="campo">
+            <label>Old Password</label>
+            <input type='password' name='passwordOld' placeholder='Contraseña Anterior' >
+        </div>
+        <div class="campo">
+            <label>Password</label>
+            <input type='password' name='password' placeholder='Nueva Contraseña' >
+        </div>
+        <div class="campo">
+            <label>Confirmar Password</label>
+            <input type='password' name='confirmar' placeholder='Confirma Nueva Contraseña' >
+        </div>
+        <div class="campo">
+               <input type= 'submit' value ='Guardar Cambios' class= 'btn btn-azul'> </input>
+        </div>
+    </form> 
+</main>

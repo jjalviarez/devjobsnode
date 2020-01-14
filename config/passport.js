@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 //Referencia al modelo donde vamos a autenticar
 const mongoose = require('mongoose');
-const Usuarios = mongoose.model('Usuario');
+const Usuario = mongoose.model('Usuario');
 
 // local strategy - login con credenciales de ususqrio y pass locales
 
@@ -15,7 +15,7 @@ passport.use(new LocalStrategy(
     async (email, password, done) => {
         try {
             //console.log(email);
-            const usuario = await Usuarios.findOne({email});
+            const usuario = await Usuario.findOne({email});
             //el ususario existe  pero el pass es incorrecto
             if(!usuario.verificarPassword(password)){
                 return done(null, false, { message: 'Incorrect password.' });
@@ -37,7 +37,7 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, done) => done (null, user._id));
 
 passport.deserializeUser(async (id, done) => {
- const usuario = await Usuarios.findById(id).exec();;
+ const usuario = await Usuario.findById(id).exec();
  return  done(null, usuario);
 });
 
