@@ -144,7 +144,9 @@ exports.formEditarPerfil = async (req,res,next) => {
     res.render("editar-perfil", {
         nombrePagina: req.user.nombre,
         tagline: 'Ecitar Usuario',
-        usuario :req.user
+        usuario :req.user,
+        nombre: req.user.nombre,
+        cerrarSesion: true,
     });
 };
 
@@ -158,9 +160,10 @@ exports.actualizarPerfil = async (req,res,next) => {
             req.flash('error', 'Password invalido');
             return res.render('editar-perfil', {
                     mensajes: req.flash(),
-                    nombrePagina: req.user.nombre,
-                    tagline: 'Ecitar Usuario',
-                    usuario: req.body
+                    nombrePagina: 'Editar Usuario',
+                    usuario: req.body,
+                    nombre: req.user.nombre,
+                    cerrarSesion: true,
             });
         }
     }

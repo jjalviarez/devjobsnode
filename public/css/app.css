@@ -89,7 +89,7 @@ h3 {
 
 
 .site-header {
-    min-height: 400px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
