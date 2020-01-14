@@ -139,11 +139,13 @@ exports.activarCuenta = async (req,res) =>{
 
 
 
-exports.formEditarPerfil = (req,res,next) => {
+exports.formEditarPerfil = async (req,res,next) => {
+    const _id = req.user._id;
+    const usuario = await Usuario.findById(_id);
     res.render("editar-perfil", {
         nombrePagina: req.user.nombre,
         tagline: 'Ecitar Usuario',
-        usuario: req.user
+        usuario
     });
 };
 
