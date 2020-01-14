@@ -140,40 +140,32 @@ exports.activarCuenta = async (req,res) =>{
 
 
 exports.formEditarPerfil = async (req,res,next) => {
-    const _id = req.user._id;
-    const usuario = await Usuario.findById(_id);
     res.render("editar-perfil", {
         nombrePagina: req.user.nombre,
         tagline: 'Ecitar Usuario',
-        usuario
+        usuario :req.user
     });
 };
 
 exports.actualizarPerfil = async (req,res,next) => {
     const {email, password, nombre, confirmar, passwordOld} = req.body;
-    const PerfilActualizado= {email,nombre};
+    const usuario = await Usuario.findById(req.user._id);
     if (password) {
-        if(bcrypt.compareSync(passwordOld, req.user.password) && (password === confirmar))
-            PerfilActualizado.password = password;
+        if(usuario.verificarPassword(passwordOld) && (password === confirmar))
+            usuario.password = password;
         else {
             req.flash('error', 'Password invalido');
-            res.render('editar-perfil', {
+            return res.render('editar-perfil', {
                     mensajes: req.flash(),
                     nombrePagina: req.user.nombre,
                     tagline: 'Ecitar Usuario',
                     usuario: req.body
             });
-            return;
         }
     }
-    const _id = req.user._id;
-    await Usuario.findByIdAndUpdate(
-        _id,
-        PerfilActualizado,
-        {
-            runValidators: true
-        
-        });
+    usuario.nombre = nombre;
+    usuario.email = email;
+    await usuario.save();
+    req.flash('correcto', 'Cambios Guardados Correctamente');
     res.redirect("/administracion");
-    
 };
