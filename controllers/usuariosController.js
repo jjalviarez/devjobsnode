@@ -139,6 +139,7 @@ exports.activarCuenta = async (req,res) =>{
 
 
 
+
 exports.formEditarPerfil = async (req,res,next) => {
     res.render("editar-perfil", {
         nombrePagina: req.user.nombre,
