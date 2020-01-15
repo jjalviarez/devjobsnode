@@ -1,3 +1,5 @@
+import vacantes from './modulos/vacantes'
+
 const skills = new Set();
 document.addEventListener('DOMContentLoaded', () => {
     

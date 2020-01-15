@@ -6,28 +6,30 @@
     </div>
     
     <h2>Lista Vacantes</h2>
-    {{#if vacantes}}
-        {{#each vacantes}}
-            <div class="vacante panel-administracion">
-                <div class="caja">
-                    <h3>{{this.empresa}}</h3>
-                    <p class='puesto'>{{this.titulo}}</p>
-                </div>
-                <div class="caja centrar-vertical">
-                    <a href='/vacante/{{this.url}}' class="btn btn-verde">Ver</a>
-                </div>
-                <div class="caja centrar-vertical">
-                    <a href='/candidatos/{{this._id}}' class="btn btn-amarillo">Cadidatos</a>
-                </div>
-                <div class="caja centrar-vertical">
-                    <a href="/vacante/editar/{{this.url}}" class="btn btn-azul">Editar</a>
-                </div>
-                <div class="caja centrar-vertical">
-                    <a href='#' data-eliminar='{{this._id}}' class="btn btn-rojo">Eliminar</a>
-                </div>
+        {{#if vacantes}}
+            <div class="panel-administracion">
+                {{#each vacantes}}
+                    <div class="vacante">
+                        <div class="caja">
+                            <h3>{{this.empresa}}</h3>
+                            <p class='puesto'>{{this.titulo}}</p>
+                        </div>
+                        <div class="caja centrar-vertical">
+                            <a href='/vacante/{{this.url}}' class="btn btn-verde">Ver</a>
+                        </div>
+                        <div class="caja centrar-vertical">
+                            <a href='/candidatos/{{this._id}}' class="btn btn-amarillo">Cadidatos</a>
+                        </div>
+                        <div class="caja centrar-vertical">
+                            <a href="/vacante/editar/{{this.url}}" class="btn btn-azul">Editar</a>
+                        </div>
+                        <div class="caja centrar-vertical">
+                            <a data-eliminar='{{this._id}}' class="btn btn-rojo">Eliminar</a>
+                        </div>
+                    </div>
+                {{/each}}
             </div>
-        {{/each}}
-    {{else}}
-        <p>No hay Vacantes</p>
-    {{/if}}
+        {{else}}
+            <p>No hay Vacantes</p>
+        {{/if}}
 </main>

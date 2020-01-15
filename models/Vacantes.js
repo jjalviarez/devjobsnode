@@ -51,11 +51,10 @@ const vacanteSchema = new mongoose.Schema({
 });
 
 vacanteSchema.pre('save',function (next) {
-    const url= slug(this.titulo)
+    const url= slug(this.titulo);
     this.url = url + '-' + shortid.generate();
-    this.skills = JSON.parse(this.skills );
     next();
-})
+});
 
 module.exports = mongoose.model('Vacante', vacanteSchema );
 

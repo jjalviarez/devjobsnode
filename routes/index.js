@@ -23,7 +23,7 @@ module.exports = () => {
     route.get('/', homeController.mostrarTrabajos );
 
     
-    //crear bacantes 
+    //crear vacantes 
     route.get('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.formularioNuevaVacante );
     route.post('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.validarVacante, vacantesController.agregarVacantes );
     
@@ -32,6 +32,8 @@ module.exports = () => {
     //editar
     route.get('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.editarVacante );
     route.post('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.validarVacante, vacantesController.actualizarVacante );
+    //Emilina Vacante    
+    route.delete('/vacante/:id', authController.usuarioAutenticado, vacantesController.eliminarVacante);
     
     //crear Cuenta
     //Crear Nueva Cuenta
@@ -55,7 +57,7 @@ module.exports = () => {
     route.get('/administracion',authController.usuarioAutenticado,authController.mostrarPanel);
     //editar Perfil
     route.get('/editar-perfil',authController.usuarioAutenticado,usuariosController.formEditarPerfil);
-    route.post('/editar-perfil',authController.usuarioAutenticado,usuariosController.actualizarPerfil);
+    route.post('/editar-perfil',authController.usuarioAutenticado, usuariosController.validarPerfil ,usuariosController.actualizarPerfil);
     
     
     

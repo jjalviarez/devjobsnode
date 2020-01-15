@@ -71,6 +71,9 @@ h3 {
 .btn-rojo {
     background-color: #C80045;
 }
+.btn-rojo:hover {
+    cursor: pointer;
+}
 
 .editar-btn {
     margin-top: 4rem;

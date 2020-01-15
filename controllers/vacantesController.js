@@ -27,6 +27,7 @@ exports.formularioNuevaVacante = (req,res) => {
 
 
 exports.agregarVacantes = async (req,res) => {
+        req.body.skills = req.body.skills.split(',');
         const vacante = await Vacante.create({...req.body, autor: req.user._id});
         res.redirect("/vacante/" + vacante.url);
 };
@@ -105,9 +106,19 @@ exports.validarVacante = async  (req,res,next) => {
         nombrePagina: (req.params.url) ? 'Editar Vacante' : 'Nueva Vacante',
         tagline: (req.params.url) ? 'Editar el Formulario' : 'Llena el Formulario',
         nuevo: (req.params.url) ? false : true,
+        cerrarSesion: true,
+        nombre: req.user.nombre,
         vacante: req.body
     });
     return ;
 };
 
 
+
+exports.eliminarVacante = async (req,res,next) => {
+    const resultado = await Vacante.findOneAndDelete({_id:req.params.id, autor: req.user._id});
+    if (!resultado) {
+         return next();   
+    }
+    res.status(200).send('Vacante Eminada Correctamenre');
+};

@@ -172,3 +172,34 @@ exports.actualizarPerfil = async (req,res,next) => {
     req.flash('correcto', 'Cambios Guardados Correctamente');
     res.redirect("/administracion");
 };
+
+
+
+exports.validarPerfil = async  (req,res,next) => {
+    const rules = [
+        sanitizeBody('nombre').escape().run(req),
+        sanitizeBody('email').escape().run(req),
+        sanitizeBody('password').escape().run(req),
+        sanitizeBody('confirmar').escape().run(req),
+        sanitizeBody('passwordOld').escape().run(req),
+        body('nombre','El nombre es Obligatorio').notEmpty().run(req),
+        body('email','El email debe ser valido').isEmail().run(req),
+        body('confirmar','El password es diferente').equals(req.body.password).run(req)
+    ];
+    await Promise.all(rules);
+    const errores = validationResult(req);
+    //console.log(errores);
+    //res.send(errores);
+    if(errores.isEmpty()){
+        return next();
+    }
+    req.flash('error', errores.array().map(error => error.msg));
+    res.render('crearCuenta', {
+        mensajes: req.flash(),
+        nombrePagina: 'Editar Usuario',
+        usuario: req.body,
+        nombre: req.user.nombre,
+        cerrarSesion: true,
+    });
+    return ;
+};
