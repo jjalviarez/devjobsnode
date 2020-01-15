@@ -25,13 +25,13 @@ module.exports = () => {
     
     //crear bacantes 
     route.get('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.formularioNuevaVacante );
-    route.post('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.agregarVacantes );
+    route.post('/vacantes/nueva',authController.usuarioAutenticado, vacantesController.validarVacante, vacantesController.agregarVacantes );
     
     //Vacante por URL
     route.get('/vacante/:url', vacantesController.vacantePorUrl );
     //editar
     route.get('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.editarVacante );
-    route.post('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.actualizarVacante );
+    route.post('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.validarVacante, vacantesController.actualizarVacante );
     
     //crear Cuenta
     //Crear Nueva Cuenta

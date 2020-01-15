@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
 const { body, sanitizeBody, validationResult } = require('express-validator');
-const bcrypt = require('bcrypt');
 
 
 

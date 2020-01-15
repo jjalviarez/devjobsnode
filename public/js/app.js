@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     skills.delete(nombre)
                 }
             }
-            document.querySelector("#skills").value= JSON.stringify([...skills]);
+            document.querySelector("#skills").value= [...skills];
         });
     }
     
