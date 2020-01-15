@@ -2,8 +2,7 @@
     <h2>Navegacion</h2>
     <div class="botones separador">
         <a href='/editar-perfil' class='btn btn-azul'>Edita Tu Perfil</a>
-        <a href='/vacantes/nueva' class='btn btn-verde'>Nueva Vacante</a>    
-        <a href='/logout' class='btn btn-rojo'>Cerrar Sesion</a>    
+        <a href='/vacantes/nueva' class='btn btn-verde'>Nueva Vacante</a>   
     </div>
     
     <h2>Lista Vacantes</h2>
@@ -13,6 +12,9 @@
                 <div class="caja">
                     <h3>{{this.empresa}}</h3>
                     <p class='puesto'>{{this.titulo}}</p>
+                </div>
+                <div class="caja centrar-vertical">
+                    <a href='/vacante/{{this.url}}' class="btn btn-verde">Ver</a>
                 </div>
                 <div class="caja centrar-vertical">
                     <a href='/candidatos/{{this._id}}' class="btn btn-amarillo">Cadidatos</a>
