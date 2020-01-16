@@ -5,6 +5,7 @@ const Vacantes = require("../models/Vacantes");
 */
 const mongoose = require('mongoose');
 const Vacante = mongoose.model('Vacante');
+//const Usuario = mongoose.model('Usuario');
 
 const { body, sanitizeBody, validationResult } = require('express-validator');
 
@@ -19,6 +20,7 @@ exports.formularioNuevaVacante = (req,res) => {
             tagline: 'Llena el Formulario',
             nuevo: true,
             nombre: req.user.nombre,
+            imagen: req.user.imagen,
             cerrarSesion: true,
         });
 };
@@ -37,12 +39,14 @@ exports.agregarVacantes = async (req,res) => {
 
 exports.vacantePorUrl = async (req,res,next) => {
     const url = req.params.url
-    const vacante = await Vacante.findOne({url});
-    //console.log(vacante + ' ' + url);
+    const vacante = await Vacante.findOne({url}).populate('autor');
+    //const usuario = await Usuario.findById(vacante.autor);
+    //console.log(vacante);
     if (!vacante) return next();
     res.render("vacante", {
         nombrePagina: vacante.titulo,
         barra: true,
+        //usuario,
         vacante
     });
     
@@ -58,6 +62,7 @@ exports.editarVacante = async (req,res,next) => {
         tagline: 'Editar el Formulario',
         vacante,
         nombre: req.user.nombre,
+        imagen: req.user.imagen,
         cerrarSesion: true,
     });
 };
@@ -108,6 +113,7 @@ exports.validarVacante = async  (req,res,next) => {
         nuevo: (req.params.url) ? false : true,
         cerrarSesion: true,
         nombre: req.user.nombre,
+        imagen: req.user.imagen,
         vacante: req.body
     });
     return ;

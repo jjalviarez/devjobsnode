@@ -57,7 +57,11 @@ module.exports = () => {
     route.get('/administracion',authController.usuarioAutenticado,authController.mostrarPanel);
     //editar Perfil
     route.get('/editar-perfil',authController.usuarioAutenticado,usuariosController.formEditarPerfil);
-    route.post('/editar-perfil',authController.usuarioAutenticado, usuariosController.validarPerfil ,usuariosController.actualizarPerfil);
+    route.post('/editar-perfil',
+    authController.usuarioAutenticado,
+    //usuariosController.validarPerfil,
+    usuariosController.subirImagen,
+    usuariosController.actualizarPerfil);
     
     
     

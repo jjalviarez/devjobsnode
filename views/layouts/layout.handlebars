@@ -28,9 +28,12 @@
                 </form>
             </div>
         {{/if}}
-         {{#if cerrarSesion}}
-             <div class="cerrar-sesion">
-                 <p>{{{nombre}}}</p>
+        {{#if cerrarSesion}}
+            <div class="cerrar-sesion">
+                <p>{{{nombre}}}</p>
+                {{#if imagen}}
+                    <img src='/uploads/perfiles/{{imagen}}' class="admin-perfil">
+                {{/if}}
                 <a href='/administracion' >Administracion</a>
                 <a href='/logout' >Cerrar Sesion</a>
             </div>

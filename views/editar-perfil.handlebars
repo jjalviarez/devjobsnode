@@ -1,5 +1,5 @@
 <main class="contenedor">
-    <form class="default-form"  method='POST'>
+    <form class="default-form"  method='POST' enctype="multipart/form-data">
         <div class="campo">
             <label>Nombre</label>
             <input type='text' name='nombre' placeholder='Ej: Juan Perez' value='{{{usuario.nombre}}}'>
@@ -7,6 +7,11 @@
         <div class="campo">
             <label>Email</label>
             <input type='email' name='email' placeholder='Ej: correo@correo.com' value='{{{usuario.email}}}'>
+        </div>
+        <div class="campo">
+            <label>Imagen</label>
+            <input type='file' name='imagen'>
+             <img src='/uploads/perfiles/{{usuario.imagen}}' class="admin-perfil">
         </div>
         <div class="campo">
             <label>Old Password</label>

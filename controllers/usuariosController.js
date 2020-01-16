@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
+const multer  = require('multer');
+const shortid = require('shortid');
+const uuidv1 = require('uuid/v1');
 const { body, sanitizeBody, validationResult } = require('express-validator');
 
 
@@ -145,6 +148,7 @@ exports.formEditarPerfil = async (req,res,next) => {
         tagline: 'Ecitar Usuario',
         usuario :req.user,
         nombre: req.user.nombre,
+        imagen: req.user.imagen,
         cerrarSesion: true,
     });
 };
@@ -153,7 +157,7 @@ exports.actualizarPerfil = async (req,res,next) => {
     const {email, password, nombre, confirmar, passwordOld} = req.body;
     const usuario = await Usuario.findById(req.user._id);
     if (password) {
-        if(usuario.verificarPassword(passwordOld) && (password === confirmar))
+        if(usuario.verificarPassword(passwordOld))
             usuario.password = password;
         else {
             req.flash('error', 'Password invalido');
@@ -162,9 +166,13 @@ exports.actualizarPerfil = async (req,res,next) => {
                     nombrePagina: 'Editar Usuario',
                     usuario: req.body,
                     nombre: req.user.nombre,
+                    imagen: req.user.imagen,
                     cerrarSesion: true,
             });
         }
+    }
+    if(req.file) {
+        usuario.imagen= req.file.filename;
     }
     usuario.nombre = nombre;
     usuario.email = email;
@@ -199,7 +207,68 @@ exports.validarPerfil = async  (req,res,next) => {
         nombrePagina: 'Editar Usuario',
         usuario: req.body,
         nombre: req.user.nombre,
+        imagen: req.user.imagen,
         cerrarSesion: true,
     });
     return ;
 };
+
+
+//Carga de Archivo----------------------------------
+
+//middleware de carga de archivo
+exports.subirImagen = (req,res,next) => {
+    upload(req, res, function (error) {
+        if (error) {
+            if (error instanceof multer.MulterError) {
+                if(error.code === 'LIMIT_FILE_SIZE') {
+                    req.flash('error', 'El archivo es muy grande: Máximo 100kb ');
+                } else {
+                    req.flash('error', error.message);
+                }
+            }
+            else {
+                req.flash('error', error.message);
+            }
+             res.render('editar-perfil', {
+                mensajes: req.flash(),
+                nombrePagina: 'Editar Usuario',
+                usuario: req.body,
+                nombre: req.user.nombre,
+                imagen: req.user.imagen,
+                cerrarSesion: true,
+            });
+            return ;
+        } 
+        else {
+        return next();
+        }
+    });
+};
+//Configuracion del archivo
+const configuracionMulter = {
+    limits: {
+        fileSize : 10000
+    },
+    fileFilter (req, file, cb) {
+        if (file.mimetype.split('/')[0]==='image') {
+            cb(null, true);
+        }
+        else {
+            cb(new Error('Formato no Valido'));
+        }
+    },
+    storage :  multer.diskStorage({
+              destination : (req, file, cb) => {
+                cb(null, __dirname + '../../public/uploads/perfiles');
+              },
+              filename : (req, file, cb) => {
+                const extnsion = file.mimetype.split('/')[1];
+                cb(null,uuidv1() + '.' + extnsion);
+              }
+    })
+    
+};
+//inicializar multer
+const upload = multer(configuracionMulter).single('imagen');
+
