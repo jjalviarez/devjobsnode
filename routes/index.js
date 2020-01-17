@@ -29,11 +29,16 @@ module.exports = () => {
     
     //Vacante por URL
     route.get('/vacante/:url', vacantesController.vacantePorUrl );
+    //Postularse
+    route.post('/vacante/:url', vacantesController.subirCV, vacantesController.contactar );
     //editar
     route.get('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.editarVacante );
     route.post('/vacante/editar/:url',authController.usuarioAutenticado, vacantesController.validarVacante, vacantesController.actualizarVacante );
     //Emilina Vacante    
     route.delete('/vacante/:id', authController.usuarioAutenticado, vacantesController.eliminarVacante);
+    
+    //candidatos
+    route.get('/candidatos/:id',authController.usuarioAutenticado, vacantesController.candidatosPorUrl );
     
     //crear Cuenta
     //Crear Nueva Cuenta
@@ -59,8 +64,8 @@ module.exports = () => {
     route.get('/editar-perfil',authController.usuarioAutenticado,usuariosController.formEditarPerfil);
     route.post('/editar-perfil',
     authController.usuarioAutenticado,
-    //usuariosController.validarPerfil,
     usuariosController.subirImagen,
+    usuariosController.validarPerfil,
     usuariosController.actualizarPerfil);
     
     

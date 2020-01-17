@@ -49,13 +49,13 @@ const vacanteSchema = new mongoose.Schema({
         
     }
 });
-
+/*
 vacanteSchema.pre('save',function (next) {
     const url= slug(this.titulo);
     this.url = url + '-' + shortid.generate();
     next();
 });
-
+*/
 module.exports = mongoose.model('Vacante', vacanteSchema );
 
 

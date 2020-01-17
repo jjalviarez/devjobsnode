@@ -38,11 +38,30 @@
 </div>
 
 <div class="contenedor datos-reclutador">
-    <div class="enviar-datos"></div>
+    <div class="enviar-datos">
+        <h2>Postularse</h2>
+        <form class="default-form"  method='POST' enctype="multipart/form-data">
+            <div class="campo">
+                <label>Nombre</label>
+                <input type='text' name='nombre' placeholder='Tu Nombre'>
+            </div>
+            <div class="campo">
+                <label>Email</label>
+                <input type='email' name='email' placeholder='Tu Email' >
+            </div>
+            <div class="campo">
+                <label>Adjuntar CV(pdf)</label>
+                <input type='file' name='cv'>
+            </div>
+            <div class="campo">
+                   <input type='submit' value ='Enviar' class= 'btn btn-verde'> </input>
+            </div>
+        </form>
+    </div>
     <div class="info-reclutador">
         <h2>Info Reclutador</h2>
         {{#if vacante.autor.nombre}}
-            <p>{{vacante.autor.nombre}}</p>
+            <p>{{{vacante.autor.nombre}}}</p>
         {{/if}}
         {{#if vacante.autor.imagen}}
             <img src='/uploads/perfiles/{{vacante.autor.imagen}}' class="admin-perfil">        

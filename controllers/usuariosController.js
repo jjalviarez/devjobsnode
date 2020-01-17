@@ -154,17 +154,18 @@ exports.formEditarPerfil = async (req,res,next) => {
 };
 
 exports.actualizarPerfil = async (req,res,next) => {
-    const {email, password, nombre, confirmar, passwordOld} = req.body;
+    const {email, password, nombre, passwordOld} = req.body;
     const usuario = await Usuario.findById(req.user._id);
     if (password) {
-        if(usuario.verificarPassword(passwordOld))
+        if(usuario.verificarPassword(passwordOld)){
             usuario.password = password;
+        }
         else {
             req.flash('error', 'Password invalido');
             return res.render('editar-perfil', {
                     mensajes: req.flash(),
                     nombrePagina: 'Editar Usuario',
-                    usuario: req.body,
+                    usuario: req.user,
                     nombre: req.user.nombre,
                     imagen: req.user.imagen,
                     cerrarSesion: true,
@@ -176,7 +177,7 @@ exports.actualizarPerfil = async (req,res,next) => {
     }
     usuario.nombre = nombre;
     usuario.email = email;
-    await usuario.save();
+    //await usuario.save();
     req.flash('correcto', 'Cambios Guardados Correctamente');
     res.redirect("/administracion");
 };
@@ -202,15 +203,15 @@ exports.validarPerfil = async  (req,res,next) => {
         return next();
     }
     req.flash('error', errores.array().map(error => error.msg));
-    res.render('crearCuenta', {
+    res.render('editar-perfil', {
         mensajes: req.flash(),
         nombrePagina: 'Editar Usuario',
-        usuario: req.body,
+        usuario: req.user,
         nombre: req.user.nombre,
         imagen: req.user.imagen,
         cerrarSesion: true,
     });
-    return ;
+    return;
 };
 
 
@@ -230,10 +231,10 @@ exports.subirImagen = (req,res,next) => {
             else {
                 req.flash('error', error.message);
             }
-             res.render('editar-perfil', {
+            res.render('editar-perfil', {
                 mensajes: req.flash(),
                 nombrePagina: 'Editar Usuario',
-                usuario: req.body,
+                usuario: req.user,
                 nombre: req.user.nombre,
                 imagen: req.user.imagen,
                 cerrarSesion: true,
