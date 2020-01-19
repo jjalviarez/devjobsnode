@@ -19,6 +19,11 @@ const usuariosSchema = new mongoose.Schema({
         trim: true
         
     },
+    activo: {
+        type: Boolean ,
+        default: false 
+        
+    },
     token: String,
     expira: Date,
     imagen: String

@@ -51,9 +51,14 @@ module.exports = () => {
     route.post('/iniciar-sesion',authController.autenticarUsuario);
     //route.get('/iniciar-sesion/:token',usuariosController.activarCuenta);
     
-  //Creat Token para cambio de  Contraseña 
-    //route.get('/restablecer', usuariosController.formRestablecerPassword);
-    //route.post('/restablecer', authController.enviarToken); 
+    //Creat Token para cambio de  Contraseña 
+    route.get('/restablecer', usuariosController.formRestablecerPassword);
+    route.post('/restablecer', authController.enviarToken); 
+
+    
+    //Realizar Cambio de   Contraseña  
+    route.get('/restablecer/:token', authController.validarToken);
+    route.post('/restablecer/:token', authController.validarPassword,authController.actualizarPassword);
     
      //Cerrar sesion
     route.get('/logout', authController.usuarioAutenticado, authController.cerrarSesion);
@@ -67,6 +72,10 @@ module.exports = () => {
     usuariosController.subirImagen,
     usuariosController.validarPerfil,
     usuariosController.actualizarPerfil);
+    
+    //buscador de vacantes 
+    route.post('/buscador',  vacantesController.buscarVacante );
+    
     
     
     

@@ -100,20 +100,18 @@ exports.forminiciarSesion = (req,res) => {
 };
 
 
-/*
+
 
 
 exports.formRestablecerPassword = (req,res) => {
-    
     res.render('restablecer', {
-        nombrePagina: 'Restablecer Contraseña'
+        nombrePagina: 'Restablecer Contraseña',
+        tagline: 'ingresa  tu correo'
     });
-    
-    
 };
 
 
-
+/*
 exports.activarCuenta = async (req,res) =>{
     
     const usuario =  await Usuarios.findOne({
@@ -177,7 +175,7 @@ exports.actualizarPerfil = async (req,res,next) => {
     }
     usuario.nombre = nombre;
     usuario.email = email;
-    //await usuario.save();
+    await usuario.save();
     req.flash('correcto', 'Cambios Guardados Correctamente');
     res.redirect("/administracion");
 };

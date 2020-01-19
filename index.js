@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const expressValidator = require('express-validator');
+const createError = require('http-errors');
 const passport = require('./config/passport');
 const MongoStore = require('connect-mongo')(session);
 
@@ -74,9 +74,24 @@ app.use((req, res, next) => {
 app.use('/',route());
 
 
+app.use( (req, res,next) => {
+   next(createError(404, 'Pagina No Encontrada :('));
+});
 
-const host = process.env.HOST || '0.0.0.0'
-const port = process.env.PORT || '8080'
+app.use( (error,req, res, next) => {
+   res.locals.mensaje = error.message;
+   const status = error.status || 500;
+   res.locals.status = status;
+   res.status(status);
+   res.render('error');
+});
+
+
+
+
+
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || '8080';
 app.listen(port, host, function () {
   console.log('Server running at http://' + host + ':' + port + '/'); 
 });

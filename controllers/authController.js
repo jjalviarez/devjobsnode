@@ -1,12 +1,13 @@
 //Referencia al modelo donde vamos a autenticar
 const mongoose = require('mongoose');
-const Usuarios = mongoose.model('Usuario');
+const Usuario = mongoose.model('Usuario');
 const Vacante = mongoose.model('Vacante');
 
 const passport = require('passport');
-//const bcrypt = require('bcrypt-nodejs');
-//const enviarEmail = require("../handlers/email");
-//const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+const enviarEmail = require("../handlers/email");
+const crypto = require('crypto');
+const { body, sanitizeBody, validationResult } = require('express-validator');
 
 
 //loguear usuario
@@ -32,15 +33,11 @@ exports.usuarioAutenticado = (req,res,next) =>{
         return res.redirect("/iniciar-sesion");
     }
 }
-/*
+
 //Enviar Token usuario
 exports.enviarToken = async (req,res) =>{
     const {email} = req.body;
-    const usuario =  await Usuarios.findOne({
-                where: {
-                        email
-                }
-    });
+    const usuario = await Usuario.findOne({email});
     
     if (!usuario) {
         req.flash('error', 'email invalido');
@@ -56,11 +53,9 @@ exports.enviarToken = async (req,res) =>{
         //});
         return res.redirect("/restablecer");
     }
-    
     //usuarios existe
-    
     usuario.token = crypto.randomBytes(20).toString('hex');
-    usuario.expiracion= Date.now()+86400000 ;
+    usuario.expira= Date.now()+86400000 ;
     await usuario.save();
     
     const url= 'https://' + req.headers.host + "/restablecer/" + usuario.token;
@@ -82,15 +77,7 @@ exports.enviarToken = async (req,res) =>{
 
 
 exports.validarToken = async (req,res) =>{
-    
-    const usuario =  await Usuarios.findOne({
-                where: {
-                        token: req.params.token,
-                        expiracion: {
-                            [Op.gte]: Date.now()
-                        }
-                }
-    });
+    const usuario = await Usuario.findOne({token: req.params.token, expira: { $gte: Date.now() }});
     
     if(!usuario) {
         req.flash('error', 'No valido');
@@ -105,42 +92,35 @@ exports.validarToken = async (req,res) =>{
 
 
 
-exports.actualizarPassword = async (req,res) =>{
-    
-    const usuario =  await Usuarios.findOne({
-                where: {
-                        token: req.params.token,
-                        expiracion: {
-                            [Op.gte]: Date.now()
-                        }
-                }
-    });
-    
-    if(!usuario) {
-        req.flash('error', 'Expirado');
-        return res.redirect("/restablecer");
+exports.validarPassword = async  (req,res,next) => {
+    const rules = [
+        sanitizeBody('password').escape().run(req),
+        sanitizeBody('confirmar').escape().run(req),
+        body('password','El password no puede ir vacío').notEmpty().run(req),
+        body('confirmar','Confirmar password no puede ir vacío').notEmpty().run(req),
+        body('confirmar','El password es diferente').equals(req.body.password).run(req)
+    ];
+    await Promise.all(rules);
+    const errores = validationResult(req);
+    if(errores.isEmpty()){
+        return next();
     }
-    const {password} = req.body;
-    if(!password) {
-        req.flash('error', 'Contraseña no puede estar en clanco');
-        return res.redirect("/restablecer");
-    }
-    else {
-        usuario.password= bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-        usuario.token = null;
-        usuario.expiracion= null ;
-        await usuario.save();
-        req.flash('correcto', 'Contraseña Actualizada');
-        return res.redirect("/iniciar-sesion");
-    }
-    
+    req.flash('error', errores.array().map(error => error.msg));
+    return res.redirect("/restablecer/" + req.params.token);
 };
 
 
+exports.actualizarPassword = async (req,res) =>{
+    const { password } = req.body;
+    const usuario = await Usuario.findOne({token: req.params.token, expira: { $gte: Date.now() }});
+    usuario.password = password;
+    usuario.token = null;
+    usuario.expira= null ;
+    await usuario.save();
+    req.flash('correcto', 'Contraseña Actualizada');
+    return res.redirect("/iniciar-sesion");
+};
 
-
-
-*/
 
 
 

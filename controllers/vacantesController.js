@@ -217,3 +217,22 @@ exports.candidatosPorUrl = async (req,res,next) => {
     });
     
 };
+
+
+exports.buscarVacante = async (req,res,next) => {
+    
+    const vacantes = await Vacante.find({
+        $text : {
+            $search : req.body.q
+        }
+    });
+    if (!vacantes) return next();
+    res.render("home", {
+        nombrePagina: 'devJobs',
+        tagline: 'Ressultados para: '+ req.body.q,
+        barra: true,
+        vacantes
+    });
+    
+};
+
